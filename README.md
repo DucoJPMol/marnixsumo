@@ -40,7 +40,16 @@ Geef de masterpincode aan één iemand die je vertrouwt. Die kan het toernooi va
 - Zodra het inzetten dicht is, worden late inzetten geweigerd.
 - Een match wordt afgerekend op de inzetten zoals ze op dat moment echt staan, dus de pot klopt altijd met wat mensen op hun scherm zagen.
 - Uitbetaling is parimutuel: de hele pot wordt verdeeld over wie de winnaar had, naar rato van de inzet. Had niemand de winnaar, dan krijgt iedereen zijn inzet terug.
+- Er wordt **niet afgerond**. Je aandeel is exact inzet × pot ÷ alles wat er op de winnaar stond, dus de uitbetalingen samen zijn precies de pot. Saldo's kunnen daardoor op komma-getallen uitkomen; je ziet ze op twee decimalen.
 - Terugdraaien is veilig omdat elk saldo wordt afgeleid uit de inzetten plus de uitslagen. Er staat nergens een los potje geld dat kan gaan afwijken.
+
+## De afrekening in biertjes
+
+Zodra de finale is ingevuld verschijnt bij iedereen het tabblad **Afrekening**. Alles boven de 50 MX is winst in biertjes, alles eronder een schuld. Omdat de MX samen altijd 50 per persoon zijn, is wat de winnaars krijgen precies wat de verliezers betalen.
+
+Het scherm laat drie dingen zien: jouw eigen positie bovenaan, daarna de lijst wie aan wie geeft, en onderaan de eindstand van iedereen. Die lijst is zo kort mogelijk gemaakt: de grootste schuld wordt tegen het grootste tegoed weggestreept, zodat niemand tien keer een half rondje hoeft te lopen.
+
+Er wordt niets afgerond, ook niet naar boven. Eén MX is één biertje, dus wie op 50,4 MX eindigt staat op 0,4 biertje. Het scherm laat dat gewoon zo zien. Hoe je dat aan de bar oplost mag je zelf weten; het gaat erom dat niemand het gevoel heeft dat er in zijn nadeel is afgerond. Verschillen kleiner dan een honderdste biertje worden weggelaten, want die zijn op het scherm toch niet te zien.
 
 ## Noodgevallen
 

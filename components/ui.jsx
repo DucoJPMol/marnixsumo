@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { mx, MIN_BET } from "../lib/bracket";
+import { mx, amount, floor2, MIN_BET } from "../lib/bracket";
 
 export const STORE_KEYS = {
   token: "mx.token",
@@ -116,8 +116,9 @@ export function Money({ value }) {
 
 // Small stake picker: chips for the common amounts, a stepper for the rest.
 export function StakePicker({ value, max, onChange }) {
-  const chips = [1, 5, 10, 25].filter((n) => n <= Math.max(max, MIN_BET));
-  const set = (n) => onChange(Math.max(MIN_BET, Math.min(max, n)));
+  const ceiling = floor2(max);
+  const chips = [1, 5, 10, 25].filter((n) => n <= Math.max(ceiling, MIN_BET));
+  const set = (n) => onChange(Math.max(MIN_BET, Math.min(ceiling, Math.round(n * 100) / 100)));
   return (
     <>
       <div className="chips">
@@ -126,7 +127,7 @@ export function StakePicker({ value, max, onChange }) {
             {n}
           </button>
         ))}
-        <button type="button" aria-pressed={value === max && max > 0} onClick={() => set(max)}>
+        <button type="button" aria-pressed={value === ceiling && ceiling > 0} onClick={() => set(ceiling)}>
           Alles
         </button>
       </div>
@@ -135,7 +136,7 @@ export function StakePicker({ value, max, onChange }) {
           −
         </button>
         <div className="value">
-          {value}
+          {amount(value)}
           <span>MX</span>
         </div>
         <button type="button" aria-label="Meer inzetten" onClick={() => set(value + 1)}>

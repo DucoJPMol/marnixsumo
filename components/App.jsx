@@ -5,6 +5,7 @@ import {
   CHAMP,
   START,
   mx,
+  amount,
   bracketFor,
   financeOf,
   parseBlob,
@@ -15,6 +16,7 @@ import { Crest, Panel, local, STORE_KEYS, action, post } from "./ui";
 import BetsTab from "./BetsTab";
 import { BracketTab, RankTab, AccountTab } from "./Screens";
 import MasterTab, { SetupForm } from "./MasterTab";
+import SettlementTab from "./Settlement";
 
 const FAST_MS = 3500; // something is happening
 const SLOW_MS = 9000; // waiting around
@@ -36,6 +38,7 @@ export default function App() {
   const tourRef = useRef(null);
   const busyRef = useRef(false);
   const feedRef = useRef(null);
+  const settleSeen = useRef(false);
   const touched = useRef(Date.now());
 
   const logOut = useCallback(() => {
@@ -164,6 +167,14 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me && me.token]);
 
+  // Zodra de finale erop zit is de afrekening het eerste wat mensen willen zien.
+  useEffect(() => {
+    if (feed && feed.phase === "done" && !settleSeen.current) {
+      settleSeen.current = true;
+      setTab("afrekening");
+    }
+  }, [feed && feed.phase]);
+
   /* ------------------------------------------------------------- money */
 
   const state = feed ? feed.state : null;
@@ -290,12 +301,14 @@ export default function App() {
   }
 
   const needsSetup = isMaster && (!hasBracket || redraw);
+  const finished = feed.phase === "done";
   const tabs = [
     ["bets", feed.phase === "predictions" ? "Voorspellen" : "Live"],
     ["bracket", "Schema"],
     ["rank", "Stand"],
     ["me", "Account"],
   ];
+  if (finished) tabs.splice(1, 0, ["afrekening", "Afrekening"]);
   if (isMaster) tabs.push(["master", "Master"]);
   const current = tabs.some(([key]) => key === tab) ? tab : "bets";
 
@@ -309,9 +322,9 @@ export default function App() {
           </span>
         </span>
         <span className="amount">
-          <b>{money.balance}</b>
+          <b>{amount(money.balance)}</b>
           <i>MX</i>
-          <span>{money.reserved > 0 ? `${money.reserved} MX in het spel` : "te besteden"}</span>
+          <span>{money.reserved > 0 ? `${mx(money.reserved)} in het spel` : "te besteden"}</span>
         </span>
       </div>
 
@@ -357,6 +370,7 @@ export default function App() {
           {current === "bets" ? (
             <BetsTab feed={feed} bracket={bracket} money={money} busy={busy} onPlace={placeBet} />
           ) : null}
+          {current === "afrekening" ? <SettlementTab feed={feed} me={me} /> : null}
           {current === "bracket" ? <BracketTab feed={feed} bracket={bracket} /> : null}
           {current === "rank" ? <RankTab feed={feed} me={me} /> : null}
           {current === "me" ? (
@@ -390,7 +404,7 @@ export default function App() {
       )}
 
       <p className="foot">
-        {feed.stats.players} spelers · {feed.stats.pot} MX op tafel
+        {feed.stats.players} spelers · {mx(feed.stats.pot)} op tafel
       </p>
     </Shell>
   );

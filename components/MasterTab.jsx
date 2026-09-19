@@ -6,6 +6,7 @@ import {
   MAX_ROSTER,
   MAX_NAME,
   mx,
+  amount,
   matchById,
   resolveSource,
   matchStatus,
@@ -194,7 +195,7 @@ export default function MasterTab({ feed, bracket, busy, error, run, onRedraw })
           <span>spelers</span>
         </div>
         <div>
-          <b>{feed.stats.pot}</b>
+          <b>{amount(feed.stats.pot)}</b>
           <span>MX ingezet</span>
         </div>
         <div>

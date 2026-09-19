@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CHAMP, mx, resolveSource, matchStatus, boutScore, winnerOf, START } from "../lib/bracket";
+import { CHAMP, mx, amount, resolveSource, matchStatus, boutScore, winnerOf, START } from "../lib/bracket";
 import { Panel, Section, Dots } from "./ui";
 
 export function BracketTab({ feed, bracket }) {
@@ -103,7 +103,7 @@ export function RankTab({ feed, me }) {
           <span>spelers</span>
         </div>
         <div>
-          <b>{stats.pot}</b>
+          <b>{amount(stats.pot)}</b>
           <span>MX in het spel</span>
         </div>
         <div>
@@ -131,7 +131,7 @@ export function RankTab({ feed, me }) {
                     </b>
                     {reserved > 0 ? <span>{mx(reserved)} in het spel</span> : null}
                   </span>
-                  <span className={`score${score > START ? " up" : score < START ? " down" : ""}`}>{score}</span>
+                  <span className={`score${score > START ? " up" : score < START ? " down" : ""}`}>{amount(score)}</span>
                 </div>
               );
             })}
@@ -175,15 +175,15 @@ export function AccountTab({ feed, me, money, onLogout, onUnlockMaster, isMaster
           </div>
           <div className="stats">
             <div>
-              <b>{money.balance}</b>
+              <b>{amount(money.balance)}</b>
               <span>MX vrij</span>
             </div>
             <div>
-              <b>{money.reserved}</b>
+              <b>{amount(money.reserved)}</b>
               <span>MX in het spel</span>
             </div>
             <div>
-              <b>{money.score}</b>
+              <b>{amount(money.score)}</b>
               <span>totaal</span>
             </div>
           </div>
@@ -220,7 +220,7 @@ export function AccountTab({ feed, me, money, onLogout, onUnlockMaster, isMaster
                     className="amt"
                     style={{ color: result.net > 0 ? "var(--vert)" : result.net < 0 ? "var(--gules)" : "var(--dim)" }}
                   >
-                    {result.net > 0 ? `+${result.net}` : result.net}
+                    {result.net > 0 ? `+${amount(result.net)}` : amount(result.net)}
                   </span>
                 </div>
               ))}
